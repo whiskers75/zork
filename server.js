@@ -15,9 +15,6 @@ var startZork = function(socket) {
     sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {
         socket.write(data);
     });
-    sessions[sockets.indexOf(socket)].on('exit', function() {
-        socket.end();
-    });
 };
 
 

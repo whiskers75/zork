@@ -13,7 +13,11 @@ net.createServer(function(socket) {
     sockets.push(socket);
     sessions[sockets.indexOf(socket)] = cp.spawn('./zork.sh'); // Spawn Zork I using frotz
     socket.on('data', function(data) {
+        data = data.replace(/[\n\r]/g, '');
+        if (data === '') {}
+        else {
         sessions[sockets.indexOf(socket)].stdin.write(data);
+        }
     });
     sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {
         socket.write(data);

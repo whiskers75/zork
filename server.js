@@ -8,7 +8,7 @@ var sockets = []
 
 
 var startZork = function(socket) {
-    sessions[sockets.indexOf(socket)] = cp.spawn('frotz', 'Zork/DATA/ZORK1.DAT'); // Spawn Zork I using frotz
+    sessions[sockets.indexOf(socket)] = cp.spawn('frotz', process.env.PWD+'/Zork/DATA/ZORK1.DAT'); // Spawn Zork I using frotz
     sessions[sockets.indexOf(socket)].stdout.pipe(socket);
     sessions[sockets.indexOf(socket)].stderr.pipe(socket);
     socket.pipe(sessions[sockets.indexOf(socket)].stdin);

@@ -11,7 +11,7 @@ var sockets = []
 
 net.createServer(function(socket) {
     sockets.push(socket);
-    sessions[sockets.indexOf(socket)] = cp.spawn('frotz '+process.env.PWD+'/Zork/DATA/ZORK1.DAT'); // Spawn Zork I using frotz
+    sessions[sockets.indexOf(socket)] = cp.spawn('./zork.sh'); // Spawn Zork I using frotz
     socket.on('data', function(data) {
         sessions[sockets.indexOf(socket)].stdin.write(data);
     });

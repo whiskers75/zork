@@ -1,7 +1,7 @@
 // Zork Server by whiskers75
 
 var cp = require('child_process');
-var net = require('net');
+var net = require('telnet');
 var util = require('util');
 var readline = require('readline');
 var sessions = [];

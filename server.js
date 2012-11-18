@@ -69,8 +69,8 @@ net.createServer(function(socket) {
                                 }
                                 socket.write('Savefile loaded.\n');
                                 readlines[sockets.indexOf(socket)] = readline.createInterface(socket, socket);
-                                sessions[sockets.indexOf(socket)] = cp.spawn('./zork.sh'); // Spawn Zork I using frotz
                                 socket.write('Loading Zork...\n');
+                                sessions[sockets.indexOf(socket)] = cp.spawn('./zork.sh'); // Spawn Zork I using frotz
                                 sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {
                                     readlines[sockets.indexOf(socket)].write(data);
                                 });

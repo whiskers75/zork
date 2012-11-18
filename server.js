@@ -94,13 +94,13 @@ net.createServer(function(socket) {
                                             sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                             // Save data file
                                             setTimeout(function() {
-                                                fs.readFile(clients[sockets.indexOf(socket)].uid + '.sav', function(err, data) {
+                                                fs.readFile(clients[sockets.indexOf(socket)].uid + '.sav', 'binary', function(err, data) {
                                                     if (err) {
                                                         socket.write('\nERROR READING SAVEFILE\n');
                                                         socket.end();
                                                     }
                                                     else {
-                                                        clients[sockets.indexOf(socket)].writeFile('ZORK1.sav', data, function(err, stat) {
+                                                        clients[sockets.indexOf(socket)].writeFile('ZORK1.sav', data, 'binary', function(err, stat) {
                                                             if (err) {
                                                                 socket.write('\nERROR SAVING TO DROPBOX\n');
                                                                 socket.end();

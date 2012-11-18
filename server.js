@@ -73,7 +73,10 @@ net.createServer(function(socket) {
                                     }
                                     else {
                                         if (startsWith(data, 'save')) {
+                                            
+                                            
                                             sessions[sockets.indexOf(socket)].stdin.write(data);
+                                            sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                             // Save data file
                                             setTimeout(function() {
                                                 fs.readFile(clients[sockets.indexOf(socket)].uid + '.sav', function(err, data) {

@@ -1,0 +1,8 @@
+{
+  "name": "zork",
+  "description": "A server for Infocom's Zork I",
+  "author": "whiskers75",
+  "dependencies": {
+    "dropbox": ""
+  }
+}

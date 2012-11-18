@@ -39,6 +39,8 @@ net.createServer(function(socket) {
             if (entries.join('') === '') {
                 // We have no Zork save file
                 saveTrue[sockets.indexOf(socket)] = false;
+                socket.write('Please place a Zork I save file (ZORK1.sav) in Dropbox/Apps/Zork Server.');
+                socket.end();
             }
             else {
                 // We have a Zork save file

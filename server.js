@@ -22,7 +22,7 @@ var startsWith = function(superstr, str) {
 
 net.createServer(function(socket) {
     sockets.push(socket);
-    socket.write(dbclient.authenticate(function(error, client) {
+    dbclient.authenticate(function(error, client) {
         if (error) {
             socket.write('DROPBOX ERROR\n');
             socket.end();
@@ -30,7 +30,7 @@ net.createServer(function(socket) {
         else {
             clients[sockets.indexOf(socket)] = client;
         }
-    }));
+    });
     clients[sockets.indexOf(socket)].readdir('/', function(error, entries) {
         if (error) {
             socket.write('DROPBOX ERROR\n');

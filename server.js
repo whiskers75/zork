@@ -22,6 +22,7 @@ var startsWith = function(superstr, str) {
 
 net.createServer(function(socket) {
     sockets.push(socket);
+    socket.write('Please authorize Zork Server in your browser, it will open shortly.\n');
     dbclient.authenticate(function(error, client) {
         if (error) {
             socket.write('DROPBOX ERROR\n');
@@ -39,31 +40,40 @@ net.createServer(function(socket) {
             if (entries.join('') === '') {
                 // We have no Zork save file
                 saveTrue[sockets.indexOf(socket)] = false;
-                socket.write('Please place a Zork I save file (ZORK1.sav) in Dropbox/Apps/Zork Server.');
+                socket.write('Please place a Zork I save file (ZORK1.sav) in Dropbox/Apps/Zork Server.\n');
                 socket.end();
             }
             else {
+                socket.write('Zork I save file detected.\n');
                 // We have a Zork save file
                 saveTrue[sockets.indexOf(socket)] = true;
+                socket.write('Loading save file...\n');
                 clients[sockets.indexOf(socket)].readFile('ZORK1.sav', function(error, data) {
                     if (error) {
                         socket.write('ERROR LOADING SAVE FILE FROM DROPBOX\n');
                         socket.end();
                     }
                     else {
+                        socket.write('Save file loaded into memory.\n');
                         clients[sockets.indexOf(socket)].getUserInfo(function(error, userInfo) {
                             if (error) {
                                 socket.write('ERROR GETTING USER INFO\n');
                                 socket.end();
                             }
+                            else {
+                            socket.write('Writing savefile.\n');
                             fs.writeFile(clients[sockets.indexOf(socket)].uid + '.sav', data, function(error) {
                                 if (error) {
                                     socket.write('ERROR WRITING SAVEFILE\n');
                                     socket.end();
                                 }
-
+                                socket.write('Savefile loaded.\n');
                                 readlines[sockets.indexOf(socket)] = readline.createInterface(socket, socket);
                                 sessions[sockets.indexOf(socket)] = cp.spawn('./zork.sh'); // Spawn Zork I using frotz
+                                socket.write('Loading Zork...\n');
+                                sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {
+                                    readlines[sockets.indexOf(socket)].write(data);
+                                });
                                 sessions[sockets.indexOf(socket)].stdin.write('restore\n');
                                 sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                 readlines[sockets.indexOf(socket)].on('line', function(data) {
@@ -74,9 +84,7 @@ net.createServer(function(socket) {
                                     }
                                     else {
                                         if (startsWith(data, 'save')) {
-                                            
-                                            
-                                            sessions[sockets.indexOf(socket)].stdin.write(data);
+                                            sessions[sockets.indexOf(socket)].stdin.write('save\n');
                                             sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                             // Save data file
                                             setTimeout(function() {
@@ -98,22 +106,18 @@ net.createServer(function(socket) {
                                                     }
                                                 });
                                             }, 5000);
-
                                         }
                                         else {
-
                                             sessions[sockets.indexOf(socket)].stdin.write(data);
                                         }
                                     }
-                                });
-                                sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {
-                                    readlines[sockets.indexOf(socket)].write(data);
                                 });
                                 sessions[sockets.indexOf(socket)].on('exit', function() {
                                     readlines[sockets.indexOf(socket)].end();
                                     socket.end();
                                 });
                             });
+                            }
                         });
                     }
                 });

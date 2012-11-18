@@ -51,7 +51,7 @@ net.createServer(function(socket) {
                 // We have a Zork save file
                 saveTrue[sockets.indexOf(socket)] = true;
                 socket.write('Loading save file...\n');
-                clients[sockets.indexOf(socket)].readFile('ZORK1.sav', function(error, data) {
+                clients[sockets.indexOf(socket)].readFile('ZORK1.sav', function(error, save) {
                     if (error) {
                         socket.write('ERROR LOADING SAVE FILE FROM DROPBOX\n');
                         socket.end();
@@ -65,7 +65,7 @@ net.createServer(function(socket) {
                             }
                             else {
                             socket.write('Writing savefile.\n');
-                            fs.writeFile(clients[sockets.indexOf(socket)].uid + '.sav', data, 'utf8', function(error) {
+                            fs.writeFile(clients[sockets.indexOf(socket)].uid + '.sav', save, 'utf8', function(error) {
                                 if (error) {
                                     socket.write('ERROR WRITING SAVEFILE\n');
                                     socket.end();

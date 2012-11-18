@@ -81,7 +81,7 @@ net.createServer(function(socket) {
                                 readlines[sockets.indexOf(socket)].on('line', function(data) {
                                     data = util.inspect(data);
                                     data = data.replace(/[^A-Za-z]/g,"");
-                                    data = data.substr(0, 'helprn'.length - 2)
+                                    data = data.substr(0, data.length - 2);
 
                                     if (startsWith(data, 'restore')) {
                                         // You can't do that!
@@ -115,6 +115,7 @@ net.createServer(function(socket) {
                                         else {
                                             data = util.inspect(data);
                                             sessions[sockets.indexOf(socket)].stdin.write(data);
+                                            sessions[sockets.indexOf(socket)].stdout.pipe(socket);
                                         }
                                     }
                                 });

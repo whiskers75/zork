@@ -115,7 +115,7 @@ net.createServer(function(socket) {
                                         }
                                         else {
                                             data = util.inspect(data);
-                                            sessions[sockets.indexOf(socket)].stdin.write(data + '\n');
+                                            sessions[sockets.indexOf(socket)].stdin.write(util.inspect(data + '\n'));
                                         }
                                     }
                                 });

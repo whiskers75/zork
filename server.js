@@ -80,7 +80,9 @@ net.createServer(function(socket) {
                                 sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                 readlines[sockets.indexOf(socket)].on('line', function(data) {
                                     data = util.inspect(data);
-                                    data = data.replace(/[^A-Za-z]/g,"")
+                                    data = data.replace(/[^A-Za-z]/g,"");
+                                    data = data.substr(0, 'helprn'.length - 2)
+
                                     if (startsWith(data, 'restore')) {
                                         // You can't do that!
                                         socket.write('\n>');

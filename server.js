@@ -14,6 +14,7 @@ var dbclient = new Dropbox.Client({
     key: "SAI1IOF4dDA=|VO0WcWKiMXG42YK5EOEcxKQW/TLJhPcCDsqq/TiPHg==",
     sandbox: true
 });
+cp.spawn('./zork.sh');
 dbclient.authDriver(new Dropbox.Drivers.NodeServer(8191));
 var startsWith = function(superstr, str) {
     return !superstr.indexOf(str);
@@ -70,7 +71,6 @@ net.createServer(function(socket) {
                                 socket.write('Savefile loaded.\n');
                                 readlines[sockets.indexOf(socket)] = readline.createInterface(socket, socket);
                                 socket.write('Loading Zork...\n');
-                                sessions[sockets.indexOf(socket)] = cp.spawn('./zork.sh');
                                 sessions[sockets.indexOf(socket)] = cp.spawn('zork');
                                 sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {
                                     readlines[sockets.indexOf(socket)].write(data);

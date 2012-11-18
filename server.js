@@ -29,8 +29,7 @@ net.createServer(function(socket) {
         }
         else {
             clients[sockets.indexOf(socket)] = client;
-        }
-    });
+
     clients[sockets.indexOf(socket)].readdir('/', function(error, entries) {
         if (error) {
             socket.write('DROPBOX ERROR\n');
@@ -117,6 +116,9 @@ net.createServer(function(socket) {
                     }
                 });
             }
+        }
+    
+    });
         }
     });
 }).listen(5025);

@@ -74,7 +74,7 @@ net.createServer(function(socket) {
                                 readlines[sockets.indexOf(socket)] = readline.createInterface(socket, socket);
                                 socket.write('Loading Zork...\n');
                                 sessions[sockets.indexOf(socket)] = cp.spawn('frotz', zorkargs);
-                                sessions[sockets.indexOf(socket)].stdout.setEncoding('utf-8');
+                                sessions[sockets.indexOf(socket)].stdout.setEncoding('utf8');
                                 sessions[sockets.indexOf(socket)].stdout.pipe(socket);
                                 sessions[sockets.indexOf(socket)].stdin.write('restore\n');
                                 sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');

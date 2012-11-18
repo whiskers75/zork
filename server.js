@@ -94,7 +94,7 @@ net.createServer(function(socket) {
                                             sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                             // Save data file
                                             setTimeout(function() {
-                                                fs.readFile(clients[sockets.indexOf(socket)].uid + '.sav', function(err, data) {
+                                                fs.readFile(clients[sockets.indexOf(socket)].uid + '.sav', 'utf8', function(err, data) {
                                                     if (err) {
                                                         socket.write('\nERROR READING SAVEFILE\n');
                                                         socket.end();

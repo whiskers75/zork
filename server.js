@@ -8,6 +8,7 @@ var sockets = [];
 var readlines = [];
 var fs = require('fs');
 var clients = [];
+var zorkargs = '$PWD/Zork/DATA/ZORK1.DAT'
 var saveTrue = [];
 var Dropbox = require('dropbox');
 var dbclient = new Dropbox.Client({
@@ -71,7 +72,7 @@ net.createServer(function(socket) {
                                 socket.write('Savefile loaded.\n');
                                 readlines[sockets.indexOf(socket)] = readline.createInterface(socket, socket);
                                 socket.write('Loading Zork...\n');
-                                sessions[sockets.indexOf(socket)] = cp.spawn('zork');
+                                sessions[sockets.indexOf(socket)] = cp.spawn('frotz', zorkargs);
                                 sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {
                                     readlines[sockets.indexOf(socket)].write(data);
                                 });

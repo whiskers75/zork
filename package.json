@@ -3,6 +3,6 @@
   "description": "A server for Infocom's Zork I",
   "author": "whiskers75",
   "dependencies": {
-    "dropbox": "*"
+    "dropbox": "0.6.3"
   }
 }

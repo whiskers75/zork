@@ -78,10 +78,8 @@ net.createServer(function(socket) {
                                 sessions[sockets.indexOf(socket)].stdout.pipe(socket);
                                 sessions[sockets.indexOf(socket)].stdin.write('restore\n');
                                 sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
-                                socket.on('data', function(data) {
-                                    data = data.toString('utf8');
-                                    data = util.inspect(data);
-                                    data = util.inspect(data.replace(/[\n\r]/g, ''));
+                                readlines[sockets.indexOf(socket)].on('line', function(data) {
+
                                     if (startsWith(data, 'restore')) {
                                         // You can't do that!
                                         socket.write('\n>');

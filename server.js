@@ -75,7 +75,7 @@ net.createServer(function(socket) {
                                 socket.write('Loading Zork...\n');
                                 sessions[sockets.indexOf(socket)] = cp.spawn('frotz', zorkargs);
                                 sessions[sockets.indexOf(socket)].stdout.setEncoding('utf8');
-                                sessions[sockets.indexOf(socket)].stdout.pipe(socket);
+                                sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {socket.write(data)});
                                 sessions[sockets.indexOf(socket)].stdin.write('restore\n');
                                 sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                 readlines[sockets.indexOf(socket)].on('line', function(data) {
@@ -115,7 +115,6 @@ net.createServer(function(socket) {
                                         else {
                                             data = util.inspect(data);
                                             sessions[sockets.indexOf(socket)].stdin.write(data);
-                                            sessions[sockets.indexOf(socket)].stdout.pipe(socket);
                                         }
                                     }
                                 });

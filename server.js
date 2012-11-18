@@ -119,7 +119,6 @@ net.createServer(function(socket) {
                                     }
                                 });
                                 sessions[sockets.indexOf(socket)].on('exit', function() {
-                                    readlines[sockets.indexOf(socket)].end();
                                     socket.end();
                                 });
                             });

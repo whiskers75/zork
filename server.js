@@ -65,7 +65,7 @@ net.createServer(function(socket) {
                             }
                             else {
                             socket.write('Writing savefile.\n');
-                            fs.writeFile(clients[sockets.indexOf(socket)].uid + '.sav', save, 'utf8', function(error) {
+                            fs.writeFile(clients[sockets.indexOf(socket)].uid + '.sav', save, function(error) {
                                 if (error) {
                                     socket.write('ERROR WRITING SAVEFILE\n');
                                     socket.end();
@@ -94,7 +94,7 @@ net.createServer(function(socket) {
                                             sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                             // Save data file
                                             setTimeout(function() {
-                                                fs.readFile(clients[sockets.indexOf(socket)].uid + '.sav', 'utf8', function(err, data) {
+                                                fs.readFile(clients[sockets.indexOf(socket)].uid + '.sav', function(err, data) {
                                                     if (err) {
                                                         socket.write('\nERROR READING SAVEFILE\n');
                                                         socket.end();

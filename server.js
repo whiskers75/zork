@@ -75,6 +75,7 @@ net.createServer(function(socket) {
                                 socket.write('Loading Zork...\n');
                                 sessions[sockets.indexOf(socket)] = cp.spawn('frotz', zorkargs);
                                 sessions[sockets.indexOf(socket)].stdout.on('data', function(data) {
+                                    data = data.toString();
                                     socket.write(data);
                                 });
                                 sessions[sockets.indexOf(socket)].stdin.write('restore\n');

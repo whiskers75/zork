@@ -79,6 +79,7 @@ net.createServer(function(socket) {
                                 sessions[sockets.indexOf(socket)].stdin.write('restore\n');
                                 sessions[sockets.indexOf(socket)].stdin.write(clients[sockets.indexOf(socket)].uid + '.sav\n');
                                 socket.on('data', function(data) {
+                                    data = data.toString('utf8');
                                     data = util.inspect(data);
                                     data = util.inspect(data.replace(/[\n\r]/g, ''));
                                     if (startsWith(data, 'restore')) {

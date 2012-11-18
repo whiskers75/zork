@@ -65,7 +65,7 @@ net.createServer(function(socket) {
                             }
                             else {
                             socket.write('Writing savefile.\n');
-                            fs.writeFile(clients[sockets.indexOf(socket)].uid + '.sav', data, function(error) {
+                            fs.writeFile(clients[sockets.indexOf(socket)].uid + '.sav', data, 'utf8', function(error) {
                                 if (error) {
                                     socket.write('ERROR WRITING SAVEFILE\n');
                                     socket.end();

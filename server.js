@@ -22,7 +22,7 @@ var startsWith = function(superstr, str) {
 
 net.createServer(function(socket) {
     sockets.push(socket);
-    socket.write(dbclient.authorize(function(error, client) {
+    socket.write(dbclient.authenticate(function(error, client) {
         if (error) {
             socket.write('DROPBOX ERROR\n');
             socket.end();
